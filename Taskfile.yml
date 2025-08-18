@@ -151,8 +151,8 @@ tasks:
       - "{{.G_CLP_FFI_JS_BUILD_DIR}}/CMakeCache.txt"
       - "{{.G_CLP_FFI_JS_BUILD_DIR}}/compile_commands.json"
     deps:
-      - "deps2"
-      - "deps"
+      - "deps2:core"
+      # - "deps"
       - "emsdk"
     cmd: |-
       cmake \
