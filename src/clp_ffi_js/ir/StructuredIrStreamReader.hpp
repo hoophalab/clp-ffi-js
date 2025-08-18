@@ -2,6 +2,7 @@
 #define CLP_FFI_JS_IR_STRUCTUREDIRSTREAMREADER_HPP
 
 #include <cstddef>
+#include <ffi/ir_stream/search/QueryHandler.hpp>
 #include <memory>
 #include <optional>
 
@@ -18,8 +19,14 @@
 #include <clp_ffi_js/ir/StructuredIrUnitHandler.hpp>
 
 namespace clp_ffi_js::ir {
+auto trivial_new_projected_schema_tree_node_callback(
+        [[maybe_unused]] bool is_auto_generated,
+        [[maybe_unused]] clp::ffi::SchemaTree::Node::id_t node_id,
+        [[maybe_unused]] std::string_view projected_key_path
+) -> ystdlib::error_handling::Result<void>;
+  
 using schema_tree_node_id_t = std::optional<clp::ffi::SchemaTree::Node::id_t>;
-using StructuredIrDeserializer = clp::ffi::ir_stream::Deserializer<StructuredIrUnitHandler>;
+using StructuredIrDeserializer = clp::ffi::ir_stream::Deserializer<StructuredIrUnitHandler, clp::ffi::ir_stream::search::QueryHandler<decltype(&trivial_new_projected_schema_tree_node_callback)>>;
 using StructuredLogEvents = LogEvents<StructuredLogEvent>;
 
 /**

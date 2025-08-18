@@ -93,7 +93,10 @@ auto StructuredIrStreamReader::create(
         ystdlib::containers::Array<char> data_array,
         ReaderOptions const& reader_options
 ) -> StructuredIrStreamReader {
-    std::istringstream query_stream{R"(@timestamp: "2024-11-28 22:55:41,288")"};
+    SPDLOG_INFO("query start");
+    std::string str{reader_options["kqlFilter"].as<std::string>()};
+    SPDLOG_INFO("query str {}", str);
+    std::istringstream query_stream{str};
     auto query{clp_s::search::kql::parse_kql_expression(query_stream)};
     auto query_handler_result{
             clp::ffi::ir_stream::search::QueryHandler<decltype(&trivial_new_projected_schema_tree_node_callback)>::create(
@@ -103,6 +106,7 @@ auto StructuredIrStreamReader::create(
                     false
             )
     };
+    SPDLOG_INFO("query end");
     if (query_handler_result.has_error()) {
         auto const error_code{query_handler_result.error()};
         throw ClpFfiJsException{
@@ -134,7 +138,8 @@ auto StructuredIrStreamReader::create(
                             reader_options[cReaderOptionsUtcOffsetKey.data()],
                             clp::ffi::SchemaTree::Node::Type::Int
                     )
-            }
+            },
+            std::move(query_handler_result.value())
     )};
     if (result.has_error()) {
         auto const error_code{result.error()};

@@ -114,6 +114,7 @@ set(CLP_FFI_JS_SRC_CLP_CORE
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/ir_stream/ir_unit_deserialization_methods.cpp
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/ir_stream/search/ErrorCode.cpp
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/ir_stream/search/QueryHandlerImpl.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/ir_stream/search/utils.cpp
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/ir_stream/utils.cpp
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/KeyValuePairLogEvent.cpp
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/SchemaTree.cpp

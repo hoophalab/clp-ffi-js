@@ -106,8 +106,6 @@ EMSCRIPTEN_BINDINGS(ClpStreamReader) {
 namespace clp_ffi_js::ir {
 auto StreamReader::create(DataArrayTsType const& data_array, ReaderOptions const& reader_options)
         -> std::unique_ptr<StreamReader> {
-    SPDLOG_INFO("StreamReader::create: kql", reader_options["kqlFilter"].as<std::string>());
-
     auto const length{data_array["length"].as<size_t>()};
     SPDLOG_INFO("StreamReader::create: got buffer of length={}", length);
 
