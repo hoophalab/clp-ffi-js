@@ -148,71 +148,41 @@ set(CLP_FFI_JS_SUPPORTED_ENVIRONMENTS
 add_subdirectory(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast)
 add_subdirectory(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/kql)
 add_subdirectory(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/string_utils)
-add_subdirectory(${CMAKE_SOURCE_DIR}/build/deps/antlr4-runtime-src)
+add_subdirectory(${CMAKE_SOURCE_DIR}/build/deps/antlr-runtime-src)
+add_subdirectory(${CMAKE_SOURCE_DIR}/build/deps/date-src)
 add_subdirectory(${CMAKE_SOURCE_DIR}/build/deps/simdjson-src)
-
-set(
-    CLP_S_AST_SOURCES
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/AndExpr.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/AndExpr.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/BooleanLiteral.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/BooleanLiteral.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/ColumnDescriptor.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/ColumnDescriptor.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/ConstantProp.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/ConstantProp.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/ConvertToExists.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/ConvertToExists.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/DateLiteral.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/DateLiteral.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/EmptyExpr.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/EmptyExpr.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Expression.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Expression.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/FilterExpr.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/FilterExpr.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/FilterOperation.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Integral.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Integral.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Literal.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/NarrowTypes.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/NarrowTypes.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/NullLiteral.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/NullLiteral.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/OrExpr.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/OrExpr.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/OrOfAndForm.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/OrOfAndForm.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/SearchUtils.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/SearchUtils.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/StringLiteral.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/StringLiteral.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Transformation.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Value.hpp
-)
-
-set(ANTLR_GENERATED_SOURCE_DIR ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/kql/generated)
-
-set(ANTLR_GENERATED_SOURCES
-		${ANTLR_GENERATED_SOURCE_DIR}/KqlBaseVisitor.cpp
-		${ANTLR_GENERATED_SOURCE_DIR}/KqlBaseVisitor.h
-		${ANTLR_GENERATED_SOURCE_DIR}/KqlLexer.cpp
-		${ANTLR_GENERATED_SOURCE_DIR}/KqlLexer.h
-		${ANTLR_GENERATED_SOURCE_DIR}/KqlParser.cpp
-		${ANTLR_GENERATED_SOURCE_DIR}/KqlParser.h
-		${ANTLR_GENERATED_SOURCE_DIR}/KqlVisitor.cpp
-		${ANTLR_GENERATED_SOURCE_DIR}/KqlVisitor.h
-)
-
-set(
-    CLP_S_KQL_SOURCES
-    ${ANTLR_GENERATED_SOURCES}
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/antlr_common/ErrorListener.hpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/kql/kql.cpp
-    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/kql/kql.hpp
-)
+add_subdirectory(${CMAKE_SOURCE_DIR}/build/deps/spdlog-src)
 
 set(CLP_BUILD_CLP_STRING_UTILS ON)
+set(CLP_BUILD_CLP_S_TIMESTAMPPATTERN ON)
+
+set(
+        CLP_S_TIMESTAMP_PATTERN_SOURCES
+        ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/Defs.hpp
+        ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/ErrorCode.hpp
+        ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/TimestampPattern.cpp
+        ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/TimestampPattern.hpp
+        ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/TraceableException.hpp
+)
+
+if(CLP_BUILD_CLP_S_TIMESTAMPPATTERN)
+        add_library(
+                clp_s_timestamp_pattern
+                ${CLP_S_TIMESTAMP_PATTERN_SOURCES}
+        )
+        add_library(clp_s::timestamp_pattern ALIAS clp_s_timestamp_pattern)
+        target_compile_features(clp_s_timestamp_pattern PRIVATE cxx_std_20)
+        target_include_directories(clp_s_timestamp_pattern PUBLIC ../)
+        target_link_libraries(
+                clp_s_timestamp_pattern
+                PRIVATE
+                clp::string_utils
+                date::date
+                spdlog::spdlog
+        )
+endif()
+
+
 foreach(env ${CLP_FFI_JS_SUPPORTED_ENVIRONMENTS})
     set(CLP_FFI_JS_BIN_NAME "ClpFfiJs-${env}")
     add_executable(${CLP_FFI_JS_BIN_NAME})
@@ -228,6 +198,10 @@ foreach(env ${CLP_FFI_JS_SUPPORTED_ENVIRONMENTS})
         embind
         antlr4_static
         simdjson::simdjson
+        spdlog::spdlog
+        clp_s::search::ast
+        clp_s::search::kql
+        string_utils
     )
     set(CLP_FFI_JS_LINK_OPTIONS
         ${CLP_FFI_JS_COMMON_LINK_OPTIONS}
@@ -253,14 +227,11 @@ Link options: ${CLP_FFI_JS_LINK_OPTIONS}."
         ${CLP_FFI_JS_BIN_NAME}
         SYSTEM
         PRIVATE
-        # ${CLP_FFI_JS_ANTLR_RUNTIME_SOURCE_DIRECTORY}/runtime/src
         ${CLP_FFI_JS_BOOST_SOURCE_DIRECTORY}
         ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src
         ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp
         ${CLP_FFI_JS_FMT_SOURCE_DIRECTORY}/include
         ${CLP_FFI_JS_NLOHMANN_JSON_SOURCE_DIRECTORY}/include
-        # ${CLP_FFI_JS_SIMDJSON_SOURCE_DIRECTORY}/include
-        ${CLP_FFI_JS_SPDLOG_SOURCE_DIRECTORY}/include
         ${CLP_FFI_JS_YSTDLIB_SOURCE_DIRECTORY}/src
         ${CLP_FFI_JS_ZSTD_SOURCE_DIRECTORY}/lib
         ${ANTLR_GENERATED_SOURCE_DIR}
@@ -275,7 +246,5 @@ Link options: ${CLP_FFI_JS_LINK_OPTIONS}."
         ${CLP_FFI_JS_SRC_CLP_CORE}
         ${CLP_FFI_JS_SRC_FMT}
         ${CLP_FFI_JS_SRC_ZSTD}
-        ${CLP_S_AST_SOURCES}
-        ${CLP_S_KQL_SOURCES}
     )
 endforeach()

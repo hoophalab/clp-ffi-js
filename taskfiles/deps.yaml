@@ -22,6 +22,7 @@ tasks:
       - "download-antlr-runtime"
       - "download-boost"
       - "download-clp"
+      - "download-date"
       - "download-fmt"
       - "download-nlohmann-json"
       - "download-simdjson"
@@ -154,6 +155,23 @@ tasks:
       - >-
         echo "set(
         CLP_FFI_JS_CLP_SOURCE_DIRECTORY \"{{.CLP_OUTPUT_DIR}}\"
+        )" > "{{.G_DEPS_CMAKE_SETTINGS_DIR}}/{{.LIB_NAME}}.cmake"
+
+  download-date:
+    internal: true
+    vars:
+      LIB_NAME: "date"
+      DATE_OUTPUT_DIR: "{{.G_DEPS_DIR}}/{{.LIB_NAME}}-src"
+    run: "once"
+    cmds:
+      - task: ":utils:remote:download-and-extract-tar"
+        vars:
+          FILE_SHA256: "7a390f200f0ccd207e8cff6757e04817c1a0aec3e327b006b7eb451c57ee3538"
+          OUTPUT_DIR: "{{.DATE_OUTPUT_DIR}}"
+          URL: "https://github.com/HowardHinnant/date/archive/refs/tags/v3.0.1.tar.gz"
+      - >-
+        echo "set(
+        CLP_FFI_JS_DATE_SOURCE_DIRECTORY \"{{.DATE_OUTPUT_DIR}}\"
         )" > "{{.G_DEPS_CMAKE_SETTINGS_DIR}}/{{.LIB_NAME}}.cmake"
 
   download-fmt:
