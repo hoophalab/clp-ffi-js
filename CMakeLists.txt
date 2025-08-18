@@ -145,6 +145,12 @@ set(CLP_FFI_JS_SUPPORTED_ENVIRONMENTS
     "List of supported environments."
 )
 
+add_subdirectory(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast)
+add_subdirectory(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/kql)
+add_subdirectory(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/string_utils)
+add_subdirectory(${CMAKE_SOURCE_DIR}/build/deps/antlr4-runtime-src)
+add_subdirectory(${CMAKE_SOURCE_DIR}/build/deps/simdjson-src)
+
 set(
     CLP_S_AST_SOURCES
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/AndExpr.cpp
@@ -185,6 +191,28 @@ set(
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Value.hpp
 )
 
+set(ANTLR_GENERATED_SOURCE_DIR ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/kql/generated)
+
+set(ANTLR_GENERATED_SOURCES
+		${ANTLR_GENERATED_SOURCE_DIR}/KqlBaseVisitor.cpp
+		${ANTLR_GENERATED_SOURCE_DIR}/KqlBaseVisitor.h
+		${ANTLR_GENERATED_SOURCE_DIR}/KqlLexer.cpp
+		${ANTLR_GENERATED_SOURCE_DIR}/KqlLexer.h
+		${ANTLR_GENERATED_SOURCE_DIR}/KqlParser.cpp
+		${ANTLR_GENERATED_SOURCE_DIR}/KqlParser.h
+		${ANTLR_GENERATED_SOURCE_DIR}/KqlVisitor.cpp
+		${ANTLR_GENERATED_SOURCE_DIR}/KqlVisitor.h
+)
+
+set(
+    CLP_S_KQL_SOURCES
+    ${ANTLR_GENERATED_SOURCES}
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/antlr_common/ErrorListener.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/kql/kql.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/kql/kql.hpp
+)
+
+set(CLP_BUILD_CLP_STRING_UTILS ON)
 foreach(env ${CLP_FFI_JS_SUPPORTED_ENVIRONMENTS})
     set(CLP_FFI_JS_BIN_NAME "ClpFfiJs-${env}")
     add_executable(${CLP_FFI_JS_BIN_NAME})
@@ -195,7 +223,12 @@ foreach(env ${CLP_FFI_JS_SUPPORTED_ENVIRONMENTS})
     target_compile_options(${CLP_FFI_JS_BIN_NAME} PRIVATE ${CLP_FFI_JS_COMMON_COMPILE_OPTIONS})
 
     # Set up link options
-    target_link_libraries(${CLP_FFI_JS_BIN_NAME} PRIVATE embind)
+    target_link_libraries(${CLP_FFI_JS_BIN_NAME}
+        PRIVATE
+        embind
+        antlr4_static
+        simdjson::simdjson
+    )
     set(CLP_FFI_JS_LINK_OPTIONS
         ${CLP_FFI_JS_COMMON_LINK_OPTIONS}
         --emit-tsd=${CLP_FFI_JS_BIN_NAME}.d.ts
@@ -220,15 +253,17 @@ Link options: ${CLP_FFI_JS_LINK_OPTIONS}."
         ${CLP_FFI_JS_BIN_NAME}
         SYSTEM
         PRIVATE
+        # ${CLP_FFI_JS_ANTLR_RUNTIME_SOURCE_DIRECTORY}/runtime/src
         ${CLP_FFI_JS_BOOST_SOURCE_DIRECTORY}
         ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src
         ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp
         ${CLP_FFI_JS_FMT_SOURCE_DIRECTORY}/include
         ${CLP_FFI_JS_NLOHMANN_JSON_SOURCE_DIRECTORY}/include
-        ${CLP_FFI_JS_SIMDJSON_SOURCE_DIRECTORY}/include
+        # ${CLP_FFI_JS_SIMDJSON_SOURCE_DIRECTORY}/include
         ${CLP_FFI_JS_SPDLOG_SOURCE_DIRECTORY}/include
         ${CLP_FFI_JS_YSTDLIB_SOURCE_DIRECTORY}/src
         ${CLP_FFI_JS_ZSTD_SOURCE_DIRECTORY}/lib
+        ${ANTLR_GENERATED_SOURCE_DIR}
     )
 
     target_include_directories(${CLP_FFI_JS_BIN_NAME} PRIVATE src/)
@@ -241,5 +276,6 @@ Link options: ${CLP_FFI_JS_LINK_OPTIONS}."
         ${CLP_FFI_JS_SRC_FMT}
         ${CLP_FFI_JS_SRC_ZSTD}
         ${CLP_S_AST_SOURCES}
+        ${CLP_S_KQL_SOURCES}
     )
 endforeach()
