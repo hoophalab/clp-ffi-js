@@ -8,12 +8,14 @@
 #include <string_view>
 #include <system_error>
 #include <utility>
+#include <sstream>
 
 #include <clp/ErrorCode.hpp>
 #include <clp/ffi/ir_stream/Deserializer.hpp>
 #include <clp/ffi/SchemaTree.hpp>
 #include <clp/ir/types.hpp>
 #include <clp/TraceableException.hpp>
+#include <clp_s/search/kql/kql.hpp>
 #include <emscripten/bind.h>
 #include <emscripten/val.h>
 #include <nlohmann/json.hpp>
@@ -78,11 +80,43 @@ EMSCRIPTEN_BINDINGS(ClpStructuredIrStreamReader) {
 }
 }  // namespace
 
+auto trivial_new_projected_schema_tree_node_callback(
+        [[maybe_unused]] bool is_auto_generated,
+        [[maybe_unused]] clp::ffi::SchemaTree::Node::id_t node_id,
+        [[maybe_unused]] std::string_view projected_key_path
+) -> ystdlib::error_handling::Result<void> {
+    return ystdlib::error_handling::success();
+}
+
 auto StructuredIrStreamReader::create(
         std::unique_ptr<ZstdDecompressor>&& zstd_decompressor,
         ystdlib::containers::Array<char> data_array,
         ReaderOptions const& reader_options
 ) -> StructuredIrStreamReader {
+    std::istringstream query_stream{R"(@timestamp: "2024-11-28 22:55:41,288")"};
+    auto query{clp_s::search::kql::parse_kql_expression(query_stream)};
+    auto query_handler_result{
+            clp::ffi::ir_stream::search::QueryHandler<decltype(&trivial_new_projected_schema_tree_node_callback)>::create(
+                    &trivial_new_projected_schema_tree_node_callback,
+                    query,
+                    {},
+                    false
+            )
+    };
+    if (query_handler_result.has_error()) {
+        auto const error_code{query_handler_result.error()};
+        throw ClpFfiJsException{
+                clp::ErrorCode::ErrorCode_Failure,
+                __FILENAME__,
+                __LINE__,
+                std::format(
+                        "Failed to create deserializer: {} {}",
+                        error_code.category().name(),
+                        error_code.message()
+                )
+        };
+    }
+
     auto deserialized_log_events{std::make_shared<StructuredLogEvents>()};
     auto result{StructuredIrDeserializer::create(
             *zstd_decompressor,

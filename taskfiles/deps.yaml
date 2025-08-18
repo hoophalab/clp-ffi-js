@@ -20,6 +20,7 @@ tasks:
       - "download-clp"
       - "download-fmt"
       - "download-nlohmann-json"
+      - "download-simdjson"
       - "download-spdlog"
       - "download-ystdlib"
       - "download-zstd"
@@ -97,6 +98,23 @@ tasks:
       - >-
         echo "set(
         CLP_FFI_JS_NLOHMANN_JSON_SOURCE_DIRECTORY \"{{.NLOHMANN_JSON_OUTPUT_DIR}}\"
+        )" > "{{.G_DEPS_CMAKE_SETTINGS_DIR}}/{{.LIB_NAME}}.cmake"
+
+  download-simdjson:
+    internal: true
+    vars:
+      LIB_NAME: "simdjson"
+      SIMDJSON_OUTPUT_DIR: "{{.G_DEPS_DIR}}/{{.LIB_NAME}}-src"
+    run: "once"
+    cmds:
+      - task: ":utils:remote:download-and-extract-tar"
+        vars:
+          FILE_SHA256: "07a1bb3587aac18fd6a10a83fe4ab09f1100ab39f0cb73baea1317826b9f9e0d"
+          OUTPUT_DIR: "{{.SIMDJSON_OUTPUT_DIR}}"
+          URL: "https://github.com/simdjson/simdjson/archive/refs/tags/v3.13.0.tar.gz"
+      - >-
+        echo "set(
+        CLP_FFI_JS_SIMDJSON_SOURCE_DIRECTORY \"{{.SIMDJSON_OUTPUT_DIR}}\"
         )" > "{{.G_DEPS_CMAKE_SETTINGS_DIR}}/{{.LIB_NAME}}.cmake"
 
   download-spdlog:

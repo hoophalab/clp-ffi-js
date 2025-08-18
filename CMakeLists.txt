@@ -113,6 +113,7 @@ set(CLP_FFI_JS_SRC_CLP_CORE
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/ir_stream/decoding_methods.cpp
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/ir_stream/ir_unit_deserialization_methods.cpp
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/ir_stream/search/ErrorCode.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/ir_stream/search/QueryHandlerImpl.cpp
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/ir_stream/utils.cpp
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/KeyValuePairLogEvent.cpp
     ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/ffi/SchemaTree.cpp
@@ -142,6 +143,46 @@ set(CLP_FFI_JS_SUPPORTED_ENVIRONMENTS
     worker
     CACHE INTERNAL
     "List of supported environments."
+)
+
+set(
+    CLP_S_AST_SOURCES
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/AndExpr.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/AndExpr.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/BooleanLiteral.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/BooleanLiteral.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/ColumnDescriptor.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/ColumnDescriptor.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/ConstantProp.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/ConstantProp.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/ConvertToExists.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/ConvertToExists.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/DateLiteral.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/DateLiteral.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/EmptyExpr.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/EmptyExpr.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Expression.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Expression.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/FilterExpr.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/FilterExpr.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/FilterOperation.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Integral.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Integral.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Literal.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/NarrowTypes.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/NarrowTypes.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/NullLiteral.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/NullLiteral.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/OrExpr.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/OrExpr.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/OrOfAndForm.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/OrOfAndForm.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/SearchUtils.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/SearchUtils.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/StringLiteral.cpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/StringLiteral.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Transformation.hpp
+    ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast/Value.hpp
 )
 
 foreach(env ${CLP_FFI_JS_SUPPORTED_ENVIRONMENTS})
@@ -184,6 +225,7 @@ Link options: ${CLP_FFI_JS_LINK_OPTIONS}."
         ${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp
         ${CLP_FFI_JS_FMT_SOURCE_DIRECTORY}/include
         ${CLP_FFI_JS_NLOHMANN_JSON_SOURCE_DIRECTORY}/include
+        ${CLP_FFI_JS_SIMDJSON_SOURCE_DIRECTORY}/include
         ${CLP_FFI_JS_SPDLOG_SOURCE_DIRECTORY}/include
         ${CLP_FFI_JS_YSTDLIB_SOURCE_DIRECTORY}/src
         ${CLP_FFI_JS_ZSTD_SOURCE_DIRECTORY}/lib
@@ -198,5 +240,6 @@ Link options: ${CLP_FFI_JS_LINK_OPTIONS}."
         ${CLP_FFI_JS_SRC_CLP_CORE}
         ${CLP_FFI_JS_SRC_FMT}
         ${CLP_FFI_JS_SRC_ZSTD}
+        ${CLP_S_AST_SOURCES}
     )
 endforeach()
