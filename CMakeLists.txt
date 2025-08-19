@@ -146,9 +146,17 @@ set(CLP_FFI_JS_SUPPORTED_ENVIRONMENTS
     "List of supported environments."
 )
 
+set(CLP_BUILD_CLP_STRING_UTILS ON)
+set(CLP_BUILD_CLP_S_SEARCH_AST ON)
+set(CLP_BUILD_CLP_S_SEARCH_KQL ON)
+message(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/string_utils)
+message(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/string_utils)
+message(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/string_utils)
+message(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/string_utils)
+
+add_subdirectory(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/string_utils)
 add_subdirectory(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/ast)
 add_subdirectory(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp_s/search/kql)
-add_subdirectory(${CLP_FFI_JS_CLP_SOURCE_DIRECTORY}/components/core/src/clp/string_utils)
 add_subdirectory(${CMAKE_SOURCE_DIR}/build/deps/antlr-runtime-src)
 add_subdirectory(${CMAKE_SOURCE_DIR}/build/deps/date-src)
 add_subdirectory(${CMAKE_SOURCE_DIR}/build/deps/simdjson-src)
